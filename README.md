@@ -7,7 +7,7 @@ GSDownloaderSDK
 --------------------
 考虑到通用性，底层没有使用最新只适用于iOS7的AFNetworking 2.x，而是最高版本的AFNetworking 1.x。适用平台：iOS5.0+
 
-如何编译:
+如何编译SDK:
 --------------------
 1:open workspace with xcode
 
@@ -116,3 +116,12 @@ GSDownloaderSDK
 4:select GSDownloaderSDK scheme,and cmd+B.
 
 GSDownloaderSDK.framework will create into GSDownloaderSDK/Products
+
+如何编译Demo:
+--------------------
+由于GSDownloaderSDK工程内，依赖了我自己封装的另外两个framework（GSUtiliesSDK.framework和GSCoreThirdParty.framework），用于我自己的项目。我把这两个framework放在SDK工程下的Frameworks目录下。Demo工程直接引用SDK工程下的framework文件。所以导致Demo工程下的Framework Search路径无法写成绝对路径的形式（或者是我不知道怎么写）
+所以第一次编译Demo工程前，先需要将对应Frameworks下的GSUtiliesSDK.framework和GSCoreThirdParty.framework重新引用一遍即可。
+
+将要做的事:
+--------------------
+取消framework的形式（做成framewok只是为自身项目提供封装），将Demo和SDK统一为一份工程文件。
