@@ -9,9 +9,11 @@ GSDownloaderSDK
 
 如何编译:
 --------------------
-1:open workspace with xcode;
-2:edit GSDownloaderSDK scheme;
-3:copy below script into Build/Pre-actions.(note:must select Provide build settings from:GSDownloaderSDK):
+1:open workspace with xcode
+
+2:edit GSDownloaderSDK scheme
+
+3:copy below script into Build/Pre-actions.(note:must select Provide build settings from:GSDownloaderSDK)
 
 	# Sets the target folders and the final framework product.
 
@@ -111,6 +113,6 @@ GSDownloaderSDK
 
 	#rm -r "${WRK_DIR}"
 
-	4:select GSDownloaderSDK scheme,and cmd+B.
+4:select GSDownloaderSDK scheme,and cmd+B.
 
 GSDownloaderSDK.framework will create into GSDownloaderSDK/Products
