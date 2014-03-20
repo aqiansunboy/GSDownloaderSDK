@@ -17,6 +17,11 @@
 @implementation GSDownloaderClient
 {
     /**
+     *  下载任务列表
+     */
+    NSMutableArray* _downloadTasks;
+    
+    /**
      *  下载任务进行队列
      */
     GSDownloadTaskQueue* _taskDoingQueue;
@@ -49,6 +54,9 @@
 {
     self = [super init];
     if (self) {
+        // add by zhenwei
+        _downloadTasks = [NSMutableArray array];
+        // end
         
         _maxDownload    = DEFAULT_QUEUE_CAPACITY;
         _maxWaiting     = DEFAULT_QUEUE_CAPACITY;
@@ -122,8 +130,10 @@
     BOOL isResuming = NO;
     
     NSString* dataUrl = [fileModel getDownloadTaskURL];
-    
-    NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:dataUrl]];
+    // add by zhenwei
+    //NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:dataUrl]];
+    NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[dataUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    // end
     
     NSString* tempPath = [fileModel getDownloadTempSavePath];
     
@@ -483,6 +493,18 @@
     _taskDoingQueue.maxCapacity = _maxDownload;
     
 }
+
+// add by zhenwei
+-(void)addDownloadTask:(id<GSSingleDownloadTaskProtocol>)task
+{
+    [_downloadTasks addObject:task];
+}
+
+-(NSArray*)downloadTasks
+{
+    return _downloadTasks;
+}
+// end
 
 - (void)setMaxWaiting:(int)maxWaiting
 {

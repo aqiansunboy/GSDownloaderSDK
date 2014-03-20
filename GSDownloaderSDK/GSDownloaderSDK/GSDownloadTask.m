@@ -29,6 +29,7 @@
     self = [super init];
     if (self) {
         _downloadStatus = GSDownloadStatusTaskNotCreated;
+        [self initDownloadStatusObserver];
     }
     
     return self;
@@ -36,8 +37,6 @@
 
 - (void)initDownloadStatusObserver
 {
-    __weak id<GSDownloadUIBindProtocol> weakDownloadUIBinder = _downloadUIBinder;
-    
     _downloadStatusKVO = [self addKVOBlockForKeyPath:@"downloadStatus" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld handler:^(NSString *keyPath, id object, NSDictionary *change) {
         
         //GSDownloadStatus oldStatusValue = [[change objectForKey:NSKeyValueChangeOldKey] integerValue];
@@ -79,8 +78,8 @@
                 break;
         }
         
-        [weakDownloadUIBinder updateUIWhenDownloadStatusChanged:uiStatus];
-        
+        GSDownloadTask* task = object;
+        [task.getDownloadUIBinder updateUIWhenDownloadStatusChanged:uiStatus];
     }];
     
 }
@@ -163,8 +162,6 @@
 - (void)setDownloadUIBinder:(id<GSDownloadUIBindProtocol>)uiBinder
 {
     _downloadUIBinder = uiBinder;
-    
-    [self initDownloadStatusObserver];
 }
 
 - (id<GSDownloadUIBindProtocol>)getDownloadUIBinder

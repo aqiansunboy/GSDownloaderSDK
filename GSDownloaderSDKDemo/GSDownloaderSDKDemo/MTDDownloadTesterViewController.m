@@ -24,8 +24,6 @@
     
     int _downdloadCount;
     
-    NSMutableArray* _downloadTasks;
-    
     //任务表格视图
     UITableView* _downloadTaskTableView;
 }
@@ -39,9 +37,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
-        _downloadTasks = [[NSMutableArray alloc] init];
-        
+                
         _startDownloadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         _startDownloadBtn.backgroundColor = [UIColor yellowColor];
         [_startDownloadBtn setTitle:@"添加下载" forState:UIControlStateNormal];
@@ -153,7 +149,7 @@
     GSDownloadTask* downloadTask = [[GSDownloadTask alloc] init];
     [downloadTask setDownloadFileModel:downloadFileModel];
     
-    [_downloadTasks addObject:downloadTask];
+    [_client addDownloadTask:downloadTask];
     
     //[self startDownloadWithTask:downloadTask];
     
@@ -193,7 +189,6 @@
 
 - (void)startDownloadWithTask:(GSDownloadTask*)downloadTask
 {
-    id<GSDownloadUIBindProtocol> downloadCell = [downloadTask getDownloadUIBinder];
     
     [_client downloadDataAsyncWithTask:downloadTask
                                  begin:^{
@@ -203,7 +198,7 @@
                                  }
                               progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead, double bytesPerSecond) {
                                                                     
-                                  [downloadCell updateUIWhenDownloadProgressChanged:bytesRead totalBytesRead:totalBytesRead totalBytesExpectedToRead:totalBytesExpectedToRead bytesPerSecond:bytesPerSecond];
+                                  [[downloadTask getDownloadUIBinder] updateUIWhenDownloadProgressChanged:bytesRead totalBytesRead:totalBytesRead totalBytesExpectedToRead:totalBytesExpectedToRead bytesPerSecond:bytesPerSecond];
                                   
                               }
                               complete:^(NSError *error) {
@@ -212,14 +207,14 @@
                                   {
                                       NSLog(@"下载失败,%@",error);
                                       
-                                      [downloadCell updateUIDownloadFail];
+                                      [[downloadTask getDownloadUIBinder] updateUIDownloadFail];
                                       
                                   }
                                   else
                                   {
                                       NSLog(@"下载成功");
                                       
-                                      [downloadCell updateUIWhenDownloadSuccessful];
+                                      [[downloadTask getDownloadUIBinder] updateUIWhenDownloadSuccessful];
                                       
                                   }
                                   
@@ -229,7 +224,7 @@
 #pragma mark - MTDDownloadTableViewCellDelegate
 - (void)startDownloadAtIndex:(int)index
 {
-    GSDownloadTask* downloadTask = [_downloadTasks objectAtIndex:index];
+    GSDownloadTask* downloadTask = [[_client downloadTasks] objectAtIndex:index];
     
     [self startDownloadWithTask:downloadTask];
 }
@@ -244,7 +239,7 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _downloadTasks.count;
+    return [_client downloadTasks].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -259,10 +254,19 @@
         cell = [[MTDDownloadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    if (cell.index != indexPath.row) {
+        GSDownloadTask* oldDownloadTask = [[_client downloadTasks] objectAtIndex:cell.index];
+        [oldDownloadTask setDownloadUIBinder:nil];
+    }
+    
     cell.index = indexPath.row;
     cell.delegate = self;
     
-    GSDownloadTask* downloadTask = [_downloadTasks objectAtIndex:cell.index];
+    GSDownloadTask* downloadTask = [[_client downloadTasks] objectAtIndex:cell.index];
+    [cell resetDownloadButton];
+    [cell resetDownloadPercentLabel];
+    [cell resetDownloadRateLabel];
+    [cell resetDownloadProgress];
     [downloadTask setDownloadUIBinder:cell];
     
     return cell;

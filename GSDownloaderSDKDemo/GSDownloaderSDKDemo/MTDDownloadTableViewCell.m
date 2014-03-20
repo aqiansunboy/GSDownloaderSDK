@@ -94,6 +94,26 @@
     [self.delegate startDownloadAtIndex:self.index];
 }
 
+- (void)resetDownloadButton
+{
+    [_downloadButton setTitle:@"开始下载" forState:UIControlStateNormal];
+}
+
+- (void)resetDownloadRateLabel
+{
+    self.downloadRateLabel.text = nil;
+}
+
+- (void)resetDownloadPercentLabel
+{
+    self.downloadPercentLabel.text = nil;
+}
+
+- (void)resetDownloadProgress
+{
+    self.downloadProgress.progress = 0.0f;
+}
+
 #pragma mark - GSDownloadUIBindProtocol
 - (void)updateUIWhenDownloadStatusChanged:(GSDownloadUIStatus)downloadStatus
 {

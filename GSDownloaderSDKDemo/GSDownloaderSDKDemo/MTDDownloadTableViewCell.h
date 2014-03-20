@@ -25,4 +25,12 @@
 
 @property (nonatomic,strong) UIProgressView* downloadProgress;
 
+/**
+ *  重置
+ */
+- (void)resetDownloadButton;
+- (void)resetDownloadRateLabel;
+- (void)resetDownloadPercentLabel;
+- (void)resetDownloadProgress;
+
 @end

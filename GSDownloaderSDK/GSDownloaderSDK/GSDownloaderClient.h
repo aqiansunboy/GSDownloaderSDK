@@ -99,4 +99,18 @@
  */
 - (void)testQueueKVO;
 
+/**
+ *  添加下载任务
+ *
+ *  @param task
+ */
+-(void)addDownloadTask:(id<GSSingleDownloadTaskProtocol>)task;
+
+/**
+ *  获取下载任务列表
+ *
+ *  @return 
+ */
+-(NSArray*)downloadTasks;
+
 @end
