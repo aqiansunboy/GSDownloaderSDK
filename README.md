@@ -7,7 +7,7 @@ GSDownloaderSDK
 --------------------
 考虑到通用性，底层没有使用最新只适用于iOS7的AFNetworking 2.x，而是最高版本的AFNetworking 1.x。适用平台：iOS5.0+
 
-如何编译SDK:
+如何编译:
 --------------------
 1:open workspace with xcode;
 2:edit GSDownloaderSDK scheme;
@@ -113,4 +113,4 @@ GSDownloaderSDK
 
 	4:select GSDownloaderSDK scheme,and cmd+B.
 
-	GSDownloaderSDK.framework will create into GSDownloaderSDK/Products
+GSDownloaderSDK.framework will create into GSDownloaderSDK/Products
