@@ -3,7 +3,7 @@ GSDownloaderSDK
 
 基于AFNetworking 1.x封装的一个下载SDK，对外提供任务下载、暂停、恢复、取消及相关批量操作。详细使用可以参考Demo代码。
 
-![Finder](https://github.com/aqiansunboy/GSDownloaderSDK/blob/master/Screenshot.png)
+![Finder](http://github.com/aqiansunboy/GSDownloaderSDK/blob/master/Screenshot.png)
 
 适用平台:
 --------------------
