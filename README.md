@@ -119,7 +119,7 @@ GSDownloaderSDK.framework will create into GSDownloaderSDK/Products
 
 如何编译Demo:
 --------------------
-由于GSDownloaderSDK工程内，依赖了我自己封装的另外两个framework（GSUtiliesSDK.framework和GSCoreThirdParty.framework），用于我自己的项目。我把这两个framework放在SDK工程下的Frameworks目录下。Demo工程直接引用SDK工程下的framework文件。所以导致Demo工程下的Framework Search路径无法写成绝对路径的形式（或者是我不知道怎么写）
+由于GSDownloaderSDK工程内，依赖了我自己封装的另外两个framework（GSUtiliesSDK.framework和GSCoreThirdParty.framework），用于我自己的项目。我把这两个framework放在SDK工程下的Frameworks目录下。Demo工程直接引用SDK工程下的framework文件。所以导致Demo工程下的Framework Search路径无法写成相对路径的形式（或者是我不知道怎么写）
 所以第一次编译Demo工程前，先需要将对应Frameworks下的GSUtiliesSDK.framework和GSCoreThirdParty.framework重新引用一遍即可。
 
 将要做的事:
