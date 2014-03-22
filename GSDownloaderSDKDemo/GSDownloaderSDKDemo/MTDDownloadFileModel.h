@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MTDDownloadFileModel : NSObject <GSDownloadFileModelProtocol>
+@interface MTDDownloadFileModel : GSDownloadFileModel
 
 @end

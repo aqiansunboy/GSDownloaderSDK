@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MTDDownloadTableViewCellDelegate.h"
 
-@interface MTDDownloadTesterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,MTDDownloadTableViewCellDelegate>
+@interface MTDDownloadTesterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,MTDDownloadTableViewCellDelegate,GSDownloadUIBindProtocol>
 
 @end

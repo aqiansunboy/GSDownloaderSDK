@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7259EB1718C828BE00C802A3 /* GSDownloadFileModelProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7259EB1618C828BE00C802A3 /* GSDownloadFileModelProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7259EB2518C96BE500C802A3 /* NSObject+KVOBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 7259EB2318C96BE500C802A3 /* NSObject+KVOBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7259EB2618C96BE500C802A3 /* NSObject+KVOBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 7259EB2418C96BE500C802A3 /* NSObject+KVOBlock.m */; };
 		7259EB2B18CDCD4300C802A3 /* GSDownloadUIBindProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7259EB2A18CDC0B000C802A3 /* GSDownloadUIBindProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7259EB3118CF0FF300C802A3 /* GSDownloadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 7259EB2F18CF0FF300C802A3 /* GSDownloadTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7259EB3218CF0FF300C802A3 /* GSDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 7259EB3018CF0FF300C802A3 /* GSDownloadTask.m */; };
-		72A39C8418C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 72A39C8318C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		72A39C8418C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 72A39C8318C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h */; };
 		72B70CA918C6BFE40073C168 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 72B70CA718C6BFE40073C168 /* InfoPlist.strings */; };
 		72B70CB118C6C2410073C168 /* GSDownloaderSDKTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 72B70CAF18C6C2410073C168 /* GSDownloaderSDKTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		72B70CB218C6C2410073C168 /* GSDownloaderSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B70CB018C6C2410073C168 /* GSDownloaderSDKTest.m */; };
@@ -25,10 +24,11 @@
 		72B70D1C18C6FE530073C168 /* GSDownloadTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B70D1A18C6FE530073C168 /* GSDownloadTaskQueue.m */; };
 		72B70D2518C70D2A0073C168 /* GSFileUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 72B70D2318C70D2A0073C168 /* GSFileUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		72B70D2618C70D2A0073C168 /* GSFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 72B70D2418C70D2A0073C168 /* GSFileUtil.m */; };
+		BFBE520418DC306100ED88C3 /* GSDownloadFileModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BFBE520218DC306100ED88C3 /* GSDownloadFileModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BFBE520518DC306100ED88C3 /* GSDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE520318DC306100ED88C3 /* GSDownloadFileModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7259EB1618C828BE00C802A3 /* GSDownloadFileModelProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSDownloadFileModelProtocol.h; sourceTree = "<group>"; };
 		7259EB1818C857A200C802A3 /* GSUtilitiesSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GSUtilitiesSDK.framework; path = GSDownloaderSDK/Frameworks/GSUtilitiesSDK.framework; sourceTree = "<group>"; };
 		7259EB2318C96BE500C802A3 /* NSObject+KVOBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOBlock.h"; sourceTree = "<group>"; };
 		7259EB2418C96BE500C802A3 /* NSObject+KVOBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOBlock.m"; sourceTree = "<group>"; };
@@ -60,6 +60,8 @@
 		72B70D1A18C6FE530073C168 /* GSDownloadTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSDownloadTaskQueue.m; sourceTree = "<group>"; };
 		72B70D2318C70D2A0073C168 /* GSFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFileUtil.h; sourceTree = "<group>"; };
 		72B70D2418C70D2A0073C168 /* GSFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSFileUtil.m; sourceTree = "<group>"; };
+		BFBE520218DC306100ED88C3 /* GSDownloadFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSDownloadFileModel.h; sourceTree = "<group>"; };
+		BFBE520318DC306100ED88C3 /* GSDownloadFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSDownloadFileModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				72A39C8318C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h */,
-				7259EB1618C828BE00C802A3 /* GSDownloadFileModelProtocol.h */,
 				7259EB2A18CDC0B000C802A3 /* GSDownloadUIBindProtocol.h */,
 			);
 			path = Protocol;
@@ -143,6 +144,8 @@
 				72B70D0F18C6C8100073C168 /* GSDownloaderClient.m */,
 				7259EB2F18CF0FF300C802A3 /* GSDownloadTask.h */,
 				7259EB3018CF0FF300C802A3 /* GSDownloadTask.m */,
+				BFBE520218DC306100ED88C3 /* GSDownloadFileModel.h */,
+				BFBE520318DC306100ED88C3 /* GSDownloadFileModel.m */,
 				72B70CA518C6BFE40073C168 /* Supporting Files */,
 			);
 			path = GSDownloaderSDK;
@@ -193,14 +196,14 @@
 				72B70CB418C6C2A60073C168 /* GSDownloaderSDK.h in Headers */,
 				72B70D2518C70D2A0073C168 /* GSFileUtil.h in Headers */,
 				72B70CB118C6C2410073C168 /* GSDownloaderSDKTest.h in Headers */,
-				7259EB1718C828BE00C802A3 /* GSDownloadFileModelProtocol.h in Headers */,
-				72A39C8418C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h in Headers */,
 				72B70D1018C6C8100073C168 /* GSDownloaderClient.h in Headers */,
 				7259EB2B18CDCD4300C802A3 /* GSDownloadUIBindProtocol.h in Headers */,
 				7259EB2518C96BE500C802A3 /* NSObject+KVOBlock.h in Headers */,
 				7259EB3118CF0FF300C802A3 /* GSDownloadTask.h in Headers */,
+				BFBE520418DC306100ED88C3 /* GSDownloadFileModel.h in Headers */,
 				72B70D0D18C6C7CF0073C168 /* GSDownloadEvenHandler.h in Headers */,
 				72B70D1B18C6FE530073C168 /* GSDownloadTaskQueue.h in Headers */,
+				72A39C8418C81415005BB2A9 /* GSSingleDownloadTaskProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +273,7 @@
 				72B70D2618C70D2A0073C168 /* GSFileUtil.m in Sources */,
 				7259EB2618C96BE500C802A3 /* NSObject+KVOBlock.m in Sources */,
 				72B70CB218C6C2410073C168 /* GSDownloaderSDKTest.m in Sources */,
+				BFBE520518DC306100ED88C3 /* GSDownloadFileModel.m in Sources */,
 				72B70D1118C6C8100073C168 /* GSDownloaderClient.m in Sources */,
 				7259EB3218CF0FF300C802A3 /* GSDownloadTask.m in Sources */,
 				72B70D1C18C6FE530073C168 /* GSDownloadTaskQueue.m in Sources */,

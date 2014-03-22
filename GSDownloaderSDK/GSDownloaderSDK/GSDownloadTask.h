@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "GSSingleDownloadTaskProtocol.h"
+#import "GSDownloadFileModel.h"
+#import "GSDownloadUIBindProtocol.h"
 
 /**
  *  实现下载任务（依赖GSSingleDownloadTaskProtocol协议）
@@ -15,6 +17,24 @@
  */
 @interface GSDownloadTask : NSObject <GSSingleDownloadTaskProtocol>
 
-@property (nonatomic) GSDownloadStatus downloadStatus;
+@property (nonatomic,getter = getDownloadStatus) GSDownloadStatus downloadStatus;
+
+// add by zhenwei
+@property (nonatomic) NSUInteger bytesRead;
+
+@property (nonatomic) long long totalBytesRead;
+
+@property (nonatomic) long long totalBytesExpectedToRead;
+
+@property (nonatomic) double bytesPerSecond;
+
+@property (nonatomic,strong,getter = getDownloadTaskId) NSString* downloadTaskId;
+
+@property (nonatomic,strong,getter = getDownloadFileModel) GSDownloadFileModel* downloadFileModel;
+
+@property (nonatomic,strong,getter = getDownloadUIBinder) id<GSDownloadUIBindProtocol> downloadUIBinder;
+// end
+
+- (BOOL)isEqualToDownloadTask:(GSDownloadTask*)downloadTask;
 
 @end

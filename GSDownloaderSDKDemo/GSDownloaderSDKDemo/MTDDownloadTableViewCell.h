@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MTDDownloadTableViewCellDelegate.h"
 
-@interface MTDDownloadTableViewCell : UITableViewCell <GSDownloadUIBindProtocol>
+@protocol GSSingleDownloadTaskProtocol;
+
+@interface MTDDownloadTableViewCell : UITableViewCell
 {
+    
 }
 
 @property (nonatomic) int index;
@@ -25,12 +28,6 @@
 
 @property (nonatomic,strong) UIProgressView* downloadProgress;
 
-/**
- *  重置
- */
-- (void)resetDownloadButton;
-- (void)resetDownloadRateLabel;
-- (void)resetDownloadPercentLabel;
-- (void)resetDownloadProgress;
+- (void)customCellByDownloadTask:(GSDownloadTask*)task;
 
 @end

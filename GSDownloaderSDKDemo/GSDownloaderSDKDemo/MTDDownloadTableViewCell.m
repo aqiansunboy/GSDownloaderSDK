@@ -91,87 +91,73 @@
 
 - (void)downloadAction
 {
-    [self.delegate startDownloadAtIndex:self.index];
+    [self.delegate downloadActionAtIndex:self.index];
 }
 
-- (void)resetDownloadButton
+- (void)customCellByDownloadTask:(GSDownloadTask*)task
 {
-    [_downloadButton setTitle:@"开始下载" forState:UIControlStateNormal];
-}
-
-- (void)resetDownloadRateLabel
-{
-    self.downloadRateLabel.text = nil;
-}
-
-- (void)resetDownloadPercentLabel
-{
-    self.downloadPercentLabel.text = nil;
-}
-
-- (void)resetDownloadProgress
-{
-    self.downloadProgress.progress = 0.0f;
-}
-
-#pragma mark - GSDownloadUIBindProtocol
-- (void)updateUIWhenDownloadStatusChanged:(GSDownloadUIStatus)downloadStatus
-{
-    
-    switch (downloadStatus) {
-        case GSDownloadUIStatusWaitingForStart:
-            [_downloadButton setTitle:@"等待中..." forState:UIControlStateNormal];
+    switch (task.downloadStatus) {
+        case GSDownloadStatusTaskNotCreated:
+            [_downloadButton setTitle:@"开始下载" forState:UIControlStateNormal];
+            self.downloadRateLabel.text = nil;
+            self.downloadPercentLabel.text = nil;
+            self.downloadProgress.progress = 0.0f;
+            break;
+        case GSDownloadStatusWaitingForStart:
+            [_downloadButton setTitle:@"等待中" forState:UIControlStateNormal];
             break;
             
-        case GSDownloadUIStatusDownloading:
-            [_downloadButton setTitle:@"下载中..." forState:UIControlStateNormal];
+        case GSDownloadStatusDownloading:
+            [_downloadButton setTitle:@"下载中" forState:UIControlStateNormal];
             break;
             
-        case GSDownloadUIStatusPaused:
-            [_downloadButton setTitle:@"暂停中..." forState:UIControlStateNormal];
+        case GSDownloadStatusPaused:
+            [_downloadButton setTitle:@"继续下载" forState:UIControlStateNormal];
             break;
             
-        case GSDownloadUIStatusWaitingForResume:
-            [_downloadButton setTitle:@"等待中..." forState:UIControlStateNormal];
+        case GSDownloadStatusWaitingForResume:
+            [_downloadButton setTitle:@"等待中" forState:UIControlStateNormal];
             break;
             
-        case GSDownloadUIStatusCanceled:
-            [_downloadButton setTitle:@"取消了..." forState:UIControlStateNormal];
+        case GSDownloadStatusCanceled:
+            [_downloadButton setTitle:@"取消了" forState:UIControlStateNormal];
             break;
             
-        case GSDownloadUIStatusSuccess:
-            [_downloadButton setTitle:@"成功了..." forState:UIControlStateNormal];
+        case GSDownloadStatusSuccess:
+            [_downloadButton setTitle:@"成功了" forState:UIControlStateNormal];
+            self.downloadPercentLabel.backgroundColor = [UIColor greenColor];
             break;
             
-        case GSDownloadUIStatusFailure:
-            [_downloadButton setTitle:@"失败了..." forState:UIControlStateNormal];
+        case GSDownloadStatusFailure:
+            [_downloadButton setTitle:@"失败了" forState:UIControlStateNormal];
+            self.downloadPercentLabel.backgroundColor = [UIColor redColor];
             break;
             
         default:
-            [_downloadButton setTitle:@"等待中..." forState:UIControlStateNormal];
+            [_downloadButton setTitle:@"等待中" forState:UIControlStateNormal];
             break;
     }
+    [self updateUIWhenDownloadProgressChanged:task.bytesRead totalBytesRead:task.totalBytesRead totalBytesExpectedToRead:task.totalBytesExpectedToRead bytesPerSecond:task.bytesPerSecond];
 }
 
-- (void)updateUIWhenDownloadProgressChanged:(NSUInteger)bytesRead totalBytesRead:(long long)totalBytesRead totalBytesExpectedToRead:(long long)totalBytesExpectedToRead bytesPerSecond:(double)bytesPerSecond
+- (void)updateUIWhenDownloadProgressChanged:(NSUInteger)bytesRead
+                             totalBytesRead:(long long)totalBytesRead
+                   totalBytesExpectedToRead:(long long)totalBytesExpectedToRead
+                             bytesPerSecond:(double)bytesPerSecond
 {
     NSString* downloadProgress = [NSString stringWithFormat:@"%0.2f",(float)totalBytesRead/(float)totalBytesExpectedToRead];
     float downloadProgressFloat = [downloadProgress floatValue];
     
     self.downloadProgress.progress = downloadProgressFloat;
-    self.downloadPercentLabel.text = [[NSString alloc] initWithFormat:@"%0.2f%%",(float)totalBytesRead/(float)totalBytesExpectedToRead*100];
-    
-    self.downloadRateLabel.text = [[NSString alloc] initWithFormat:@"%0.0fK/s",(float)bytesPerSecond/1000];
+    if (totalBytesExpectedToRead > 0.0) {
+        self.downloadPercentLabel.text = [[NSString alloc] initWithFormat:@"%0.2f%%",(float)totalBytesRead/(float)totalBytesExpectedToRead*100];
+        self.downloadRateLabel.text = [[NSString alloc] initWithFormat:@"%0.0fK/s",(float)bytesPerSecond/1000];
+    }
+    else{
+        self.downloadPercentLabel.text = nil;
+        self.downloadRateLabel.text = nil;
+    }
 }
 
-- (void)updateUIWhenDownloadSuccessful
-{
-    self.downloadPercentLabel.backgroundColor = [UIColor greenColor];
-}
-
-- (void)updateUIDownloadFail
-{
-    self.downloadPercentLabel.backgroundColor = [UIColor redColor];
-}
 
 @end

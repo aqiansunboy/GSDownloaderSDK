@@ -13,10 +13,9 @@
 #import <GSDownloaderSDK/GSDownloaderClient.h>
 #import <GSDownloaderSDK/GSFileUtil.h>
 #import <GSDownloaderSDK/GSDownloadEvenHandler.h>
-#import <GSDownloaderSDK/GSSingleDownloadTaskProtocol.h>
-#import <GSDownloaderSDK/GSDownloadFileModelProtocol.h>
 #import <GSDownloaderSDK/GSDownloadUIBindProtocol.h>
 #import <GSDownloaderSDK/GSDownloadTask.h>
+#import <GSDownloaderSDK/GSDownloadFileModel.h>
 
 //NSObject+KVOBlock
 #import <GSDownloaderSDK/NSObject+KVOBlock.h>

@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GSDownloadEvenHandler.h"
-#import "GSSingleDownloadTaskProtocol.h"
-#import "GSDownloadFileModelProtocol.h"
-#import "GSDownloadUIBindProtocol.h"
+#import "GSDownloadTask.h"
 
 /**
  *  下载客户端类
@@ -53,7 +51,7 @@
  *  @param progress        处理下载中回调
  *  @param complete        完成回调
  */
-- (void)downloadDataAsyncWithTask:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)downloadDataAsyncWithTask:(GSDownloadTask*)downloadTask
                              begin:(GSDownloadBeginEventHandler)begin
                           progress:(GSDownloadingEventHandler)progress
                           complete:(GSDownloadedEventHandler)complete;
@@ -63,21 +61,21 @@
  *
  *  @param downloadTask 指定下载任务
  */
-- (void)continueOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask;
+- (void)continueOneDownloadTaskWith:(GSDownloadTask*)downloadTask;
 
 /**
  *  暂停一条下载任务
  *
  *  @param downloadTask 指定下载任务
  */
-- (void)pauseOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask;
+- (void)pauseOneDownloadTaskWith:(GSDownloadTask*)downloadTask;
 
 /**
  *  取消一条下载任务
  *
  *  @param downloadTask 指定下载任务
  */
-- (void)cancelOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask;
+- (void)cancelOneDownloadTaskWith:(GSDownloadTask*)downloadTask;
 
 /**
  *  开始全部下载任务
@@ -104,7 +102,7 @@
  *
  *  @param task
  */
--(void)addDownloadTask:(id<GSSingleDownloadTaskProtocol>)task;
+-(void)addDownloadTask:(GSDownloadTask*)task;
 
 /**
  *  获取下载任务列表

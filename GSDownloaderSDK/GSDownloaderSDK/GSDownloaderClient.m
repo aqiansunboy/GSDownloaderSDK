@@ -10,6 +10,7 @@
 #import "GSDownloadTaskQueue.h"
 #import "GSFileUtil.h"
 #import "NSObject+KVOBlock.h"
+#import "GSDownloadFileModel.h"
 
 #define DEFAULT_QUEUE_CAPACITY 6        //默认队列容量
 #define DEFAULT_FAITURE_RETRY_CHANCE 6  //默认失败重试机会
@@ -92,7 +93,7 @@
     return _sharedObject;
 }
 
-- (void)downloadDataAsyncWithTask:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)downloadDataAsyncWithTask:(GSDownloadTask*)downloadTask
                              begin:(GSDownloadBeginEventHandler)begin
                           progress:(GSDownloadingEventHandler)progress
                           complete:(GSDownloadedEventHandler)complete
@@ -109,13 +110,13 @@
     
 }
 
-- (void)beginDownloadTask:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)beginDownloadTask:(GSDownloadTask*)downloadTask
                             begin:(GSDownloadBeginEventHandler)begin
                          progress:(GSDownloadingEventHandler)progress
                          complete:(GSDownloadedEventHandler)complete
 {
     //获取文件模型数据
-    id<GSDownloadFileModelProtocol> fileModel = [downloadTask getDownloadFileModel];
+    GSDownloadFileModel* fileModel = [downloadTask getDownloadFileModel];
     
     if (![self validateFileMetaData:fileModel])
     {
@@ -286,7 +287,7 @@
     
 }
 
-- (void)startOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)startOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     [downloadTask setDownloadStatus:GSDownloadStatusWaitingForStart];
     
@@ -311,7 +312,7 @@
  *
  *  @param downloadTask 要继续的任务
  */
-- (void)doContinueOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)doContinueOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     
     if ([_taskDoingQueue full]) //下载队列满了....进入等待队列
@@ -350,7 +351,7 @@
     
 }
 
-- (void)continueOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)continueOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     //从暂停队列中移除掉
     [_taskPausedQueue remove:downloadTask];
@@ -364,7 +365,7 @@
  *
  *  @param downloadTask 要暂停的任务
  */
-- (void)doPauseOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)doPauseOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     if ([downloadTask getDownloadStatus] == GSDownloadStatusDownloading)
     {
@@ -378,7 +379,7 @@
     [_taskPausedQueue enqueue:downloadTask];
 }
 
-- (void)pauseOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)pauseOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     //从下载队列中移除
     [_taskDoingQueue remove:downloadTask];
@@ -386,14 +387,14 @@
     [self doPauseOneDownloadTaskWith:downloadTask];
 }
 
-- (void)doCancelOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)doCancelOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     //取消任务
     [downloadTask cancelDownloadTask:^(){
         [downloadTask setDownloadStatus:GSDownloadStatusCanceled];
     }];
     
-    id<GSDownloadFileModelProtocol> fileModel = [downloadTask getDownloadFileModel];
+    GSDownloadFileModel* fileModel = [downloadTask getDownloadFileModel];
     
     //移除临时文件
     NSString* tempFile = [fileModel getDownloadTempSavePath];
@@ -404,7 +405,7 @@
     [GSFileUtil deleteFileAtPath:tempFilePlist];
 }
 
-- (void)cancelOneDownloadTaskWith:(id<GSSingleDownloadTaskProtocol>)downloadTask
+- (void)cancelOneDownloadTaskWith:(GSDownloadTask*)downloadTask
 {
     [self doPauseOneDownloadTaskWith:downloadTask];
     
@@ -425,7 +426,7 @@
     
     for (int i = 0; i < taskCount; i++)
     {
-        id<GSSingleDownloadTaskProtocol> downloadTask = [_taskPausedQueue peekAtIndex:i];
+        GSDownloadTask* downloadTask = [_taskPausedQueue peekAtIndex:i];
         
         [self doContinueOneDownloadTaskWith:downloadTask];
     }
@@ -439,7 +440,7 @@
     int doingTaskCount = [_taskDoingQueue queueCount];
     for (int i = 0; i < doingTaskCount; i++)
     {
-        id<GSSingleDownloadTaskProtocol> downloadTask = [_taskDoingQueue peekAtIndex:i];
+        GSDownloadTask* downloadTask = [_taskDoingQueue peekAtIndex:i];
         
         [self doPauseOneDownloadTaskWith:downloadTask];
     }
@@ -448,7 +449,7 @@
     int waitingTaskCount = [_taskWaitingQueue queueCount];
     for (int i = 0; i < waitingTaskCount; i++)
     {
-        id<GSSingleDownloadTaskProtocol> downloadTask = [_taskWaitingQueue peekAtIndex:i];
+        GSDownloadTask* downloadTask = [_taskWaitingQueue peekAtIndex:i];
         
         [self doPauseOneDownloadTaskWith:downloadTask];
     }
@@ -463,7 +464,7 @@
     int pausedTaskCount = [_taskPausedQueue queueCount];
     for (int i = 0; i < pausedTaskCount; i++) {
         
-        id<GSSingleDownloadTaskProtocol> downloadTask = [_taskPausedQueue peekAtIndex:i];
+        GSDownloadTask* downloadTask = [_taskPausedQueue peekAtIndex:i];
         
         [self doCancelOneDownloadTaskWith:downloadTask];
     }
@@ -495,7 +496,7 @@
 }
 
 // add by zhenwei
--(void)addDownloadTask:(id<GSSingleDownloadTaskProtocol>)task
+-(void)addDownloadTask:(GSDownloadTask*)task
 {
     [_downloadTasks addObject:task];
 }
@@ -545,7 +546,7 @@
         if (isFullNewValue == NO)
         {
             
-            id<GSSingleDownloadTaskProtocol> downloadTask = (id<GSSingleDownloadTaskProtocol>)[weakWaitingQueue dequeue];
+            GSDownloadTask* downloadTask = (id<GSSingleDownloadTaskProtocol>)[weakWaitingQueue dequeue];
             
             //开始下载任务
             if (downloadTask != nil) {
@@ -585,7 +586,7 @@
  *
  *  @return
  */
-- (BOOL)validateFileMetaData:(id<GSDownloadFileModelProtocol>)fileModel
+- (BOOL)validateFileMetaData:(GSDownloadFileModel*)fileModel
 {
     // TODO
     return YES;

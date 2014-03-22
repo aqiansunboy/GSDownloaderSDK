@@ -64,7 +64,7 @@
         _downloadTaskTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         _client = [GSDownloaderClient sharedDownloaderClient];
-        _client.maxDownload = 2;
+        _client.maxDownload = 6;
         _client.maxWaiting = NSIntegerMax;
         _client.maxPaused = NSIntegerMax;
         _client.maxFailureRetryChance = 10;
@@ -147,7 +147,9 @@
     [downloadFileModel setDownloadFilePlistURL:@"itms-services:///?action=download-manifest&url=http://mobi.4399tech.com:8003/app/GameStoreHD/GameStoreHD.plist"];
     
     GSDownloadTask* downloadTask = [[GSDownloadTask alloc] init];
+    [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount]];
     [downloadTask setDownloadFileModel:downloadFileModel];
+    [downloadTask setDownloadUIBinder:self];
     
     [_client addDownloadTask:downloadTask];
     
@@ -155,8 +157,7 @@
     
     [_downloadTaskTableView reloadData];
     
-    
-    
+    [self startDownloadWithTask:downloadTask];
 }
 
 - (void)pauseAllDownload
@@ -192,42 +193,67 @@
     
     [_client downloadDataAsyncWithTask:downloadTask
                                  begin:^{
-                                     
                                      NSLog(@"准备开始下载...");
-                                     
                                  }
                               progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead, double bytesPerSecond) {
-                                                                    
-                                  [[downloadTask getDownloadUIBinder] updateUIWhenDownloadProgressChanged:bytesRead totalBytesRead:totalBytesRead totalBytesExpectedToRead:totalBytesExpectedToRead bytesPerSecond:bytesPerSecond];
-                                  
+                                  downloadTask.bytesRead = bytesRead;
+                                  downloadTask.totalBytesRead = totalBytesRead;
+                                  downloadTask.totalBytesExpectedToRead = totalBytesExpectedToRead;
+                                  downloadTask.bytesPerSecond = bytesPerSecond;
+                                  [self updateUIWithTask:downloadTask];
                               }
                               complete:^(NSError *error) {
                                   
                                   if (error)
                                   {
                                       NSLog(@"下载失败,%@",error);
-                                      
-                                      [[downloadTask getDownloadUIBinder] updateUIDownloadFail];
-                                      
+                                      downloadTask.downloadStatus = GSDownloadStatusFailure;
+                                      [self updateUIWithTask:downloadTask];
                                   }
                                   else
                                   {
                                       NSLog(@"下载成功");
-                                      
-                                      [[downloadTask getDownloadUIBinder] updateUIWhenDownloadSuccessful];
-                                      
+                                      downloadTask.downloadStatus = GSDownloadStatusSuccess;
+                                      [self updateUIWithTask:downloadTask];
                                   }
                                   
                               }];
 }
 
+- (void)pauseDownloadWithTask:(GSDownloadTask*)downloadTask
+{
+    [_client pauseOneDownloadTaskWith:downloadTask];
+}
+
+- (void)continueDownloadWithTask:(GSDownloadTask*)downloadTask
+{
+    [_client continueOneDownloadTaskWith:downloadTask];
+}
+
 #pragma mark - MTDDownloadTableViewCellDelegate
-- (void)startDownloadAtIndex:(int)index
+- (void)downloadActionAtIndex:(int)index
 {
     GSDownloadTask* downloadTask = [[_client downloadTasks] objectAtIndex:index];
     
-    [self startDownloadWithTask:downloadTask];
+    switch ([downloadTask getDownloadStatus]) {
+        case GSDownloadStatusTaskNotCreated:
+            [self startDownloadWithTask:downloadTask];
+            break;
+            
+        case GSDownloadStatusDownloading:
+            [self pauseDownloadWithTask:downloadTask];
+            break;
+            
+        case GSDownloadStatusPaused:
+            [self continueDownloadWithTask:downloadTask];
+            break;
+        default:
+            break;
+    }
+    
 }
+
+
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -254,23 +280,30 @@
         cell = [[MTDDownloadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    if (cell.index != indexPath.row) {
-        GSDownloadTask* oldDownloadTask = [[_client downloadTasks] objectAtIndex:cell.index];
-        [oldDownloadTask setDownloadUIBinder:nil];
-    }
-    
     cell.index = indexPath.row;
     cell.delegate = self;
     
-    GSDownloadTask* downloadTask = [[_client downloadTasks] objectAtIndex:cell.index];
-    [cell resetDownloadButton];
-    [cell resetDownloadPercentLabel];
-    [cell resetDownloadRateLabel];
-    [cell resetDownloadProgress];
-    [downloadTask setDownloadUIBinder:cell];
+    GSDownloadTask* task = [[_client downloadTasks]objectAtIndex:indexPath.row];
+    [cell customCellByDownloadTask:task];
     
     return cell;
     
+}
+
+#pragma mark - GSDownloadUIBindProtocol
+- (void)updateUIWithTask:(id<GSSingleDownloadTaskProtocol>)downloadTask
+{
+    NSMutableArray* indexPaths = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [_client downloadTasks].count; i++) {
+        GSDownloadTask* task = [_client downloadTasks][i];
+        if ([task isEqualToDownloadTask:downloadTask]) {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            
+            [indexPaths addObject:indexPath];
+        };
+    }
+    
+    [_downloadTaskTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
 @end

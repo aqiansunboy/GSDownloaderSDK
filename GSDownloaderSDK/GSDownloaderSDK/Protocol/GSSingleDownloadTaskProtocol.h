@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GSDownloadFileModelProtocol.h"
-#import "GSDownloadUIBindProtocol.h"
 
 /**
  *  标记任务下载状态
@@ -32,6 +30,7 @@ typedef enum
 @protocol GSSingleDownloadTaskProtocol <NSObject>
 
 @required
+
 /**
  *  保存下载请求操作
  *
@@ -68,49 +67,11 @@ typedef enum
 - (void)cancelDownloadTask:(void (^)())bindDoSomething;
 
 /**
- *  设置对应下载文件逻辑映射模型（必须实现GSDownloadFileModelProtocol协议）
- *
- *  @param fileModel
- */
-- (void)setDownloadFileModel:(id<GSDownloadFileModelProtocol>)fileModel;
-/**
- *  获取对应下载文件逻辑映射模型（必须实现GSDownloadFileModelProtocol协议）
- *
- *  @return
- */
-- (id<GSDownloadFileModelProtocol>)getDownloadFileModel;
-
-/**
- *  设置下载任务状态
- *
- *  @param downloadStatus
- */
-- (void)setDownloadStatus:(GSDownloadStatus)downloadStatus;
-/**
- *  获得任务下载状态
- *
- *  @return
- */
-- (GSDownloadStatus)getDownloadStatus;
-
-/**
  *  标记失败次数增1
  *
  *  @return 返回已失败次数
  */
 - (int)increaseFailureCount;
 
-/**
- *  设置下载任务UI绑定对象
- *
- *  @param uiBinder UI绑定对象
- */
-- (void)setDownloadUIBinder:(id<GSDownloadUIBindProtocol>)uiBinder;
-/**
- *  获得下载任务UI绑定对象
- *
- *  @return UI绑定对象
- */
-- (id<GSDownloadUIBindProtocol>)getDownloadUIBinder;
 
 @end

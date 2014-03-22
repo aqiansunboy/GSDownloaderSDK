@@ -13,13 +13,7 @@
 {
     AFHTTPRequestOperation* _downloadOperation;
     
-    id<GSDownloadFileModelProtocol> _fileModel;
-    
-    GSDownloadStatus _downloadStatus;
-    
     int _failureCount;
-    
-    id<GSDownloadUIBindProtocol> _downloadUIBinder;
     
     id _downloadStatusKVO;
 }
@@ -41,50 +35,24 @@
         
         //GSDownloadStatus oldStatusValue = [[change objectForKey:NSKeyValueChangeOldKey] integerValue];
         
-        GSDownloadStatus newStatusValue = (GSDownloadStatus)[[change objectForKey:NSKeyValueChangeNewKey] integerValue];
-        GSDownloadUIStatus uiStatus  = GSDownloadUIStatusTaskNotCreated;
-        
-        switch (newStatusValue) {
-            case GSDownloadStatusWaitingForStart:
-                uiStatus = GSDownloadUIStatusWaitingForStart;
-                break;
-                
-            case GSDownloadStatusDownloading:
-                uiStatus = GSDownloadUIStatusDownloading;
-                break;
-                
-            case GSDownloadStatusPaused:
-                uiStatus = GSDownloadUIStatusPaused;
-                break;
-                
-            case GSDownloadStatusWaitingForResume:
-                uiStatus = GSDownloadUIStatusWaitingForResume;
-                break;
-                
-            case GSDownloadStatusCanceled:
-                uiStatus = GSDownloadUIStatusCanceled;
-                break;
-                
-            case GSDownloadStatusSuccess:
-                uiStatus = GSDownloadUIStatusSuccess;
-                break;
-                
-            case GSDownloadStatusFailure:
-                uiStatus = GSDownloadUIStatusFailure;
-                break;
-                
-            default:
-                uiStatus = GSDownloadUIStatusWaitingForStart;
-                break;
-        }
         
         GSDownloadTask* task = object;
-        [task.getDownloadUIBinder updateUIWhenDownloadStatusChanged:uiStatus];
+        [task.getDownloadUIBinder updateUIWithTask:task];
     }];
     
 }
 
+
+- (BOOL)isEqualToDownloadTask:(GSDownloadTask*)downloadTask
+{
+    if ([[self getDownloadTaskId]compare:[downloadTask getDownloadTaskId]] == 0) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark - GSSingleDownloadTaskProtocol
+
 - (void)setDownloadOperation:(AFHTTPRequestOperation *)downloadOperation
 {
     _downloadOperation = downloadOperation;
@@ -132,41 +100,11 @@
     }
 }
 
-- (void)setDownloadFileModel:(id<GSDownloadFileModelProtocol>)fileModel
-{
-    _fileModel = fileModel;
-}
-
-- (id<GSDownloadFileModelProtocol>)getDownloadFileModel
-{
-    return _fileModel;
-}
-
-- (void)setDownloadStatus:(GSDownloadStatus)downloadStatus
-{
-    _downloadStatus = downloadStatus;
-}
-
-- (GSDownloadStatus)getDownloadStatus
-{
-    return _downloadStatus;
-}
-
 - (int)increaseFailureCount
 {
     _failureCount++;
     
     return _failureCount;
-}
-
-- (void)setDownloadUIBinder:(id<GSDownloadUIBindProtocol>)uiBinder
-{
-    _downloadUIBinder = uiBinder;
-}
-
-- (id<GSDownloadUIBindProtocol>)getDownloadUIBinder
-{
-    return _downloadUIBinder;
 }
 
 #pragma mark - dealloc

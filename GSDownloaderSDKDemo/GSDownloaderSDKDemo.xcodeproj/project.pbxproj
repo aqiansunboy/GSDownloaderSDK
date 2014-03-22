@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7259EB1B18C85F0000C802A3 /* GSUtilitiesSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7259EB1A18C85F0000C802A3 /* GSUtilitiesSDK.framework */; };
 		7259EB2118C861C100C802A3 /* MTDDownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7259EB2018C861C100C802A3 /* MTDDownloadFileModel.m */; };
 		7259EB2918CDA62C00C802A3 /* MTDDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7259EB2818CDA62C00C802A3 /* MTDDownloadTableViewCell.m */; };
 		72A39C4418C73CD2005BB2A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C4318C73CD2005BB2A9 /* Foundation.framework */; };
@@ -21,9 +20,10 @@
 		72A39C7518C73D02005BB2A9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7418C73D02005BB2A9 /* MobileCoreServices.framework */; };
 		72A39C7718C73D0B005BB2A9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7618C73D0B005BB2A9 /* SystemConfiguration.framework */; };
 		72A39C7918C73D13005BB2A9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7818C73D13005BB2A9 /* CoreLocation.framework */; };
-		72A39C7B18C73D2E005BB2A9 /* GSDownloaderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7A18C73D2E005BB2A9 /* GSDownloaderSDK.framework */; };
-		72A39C7D18C73D3A005BB2A9 /* GSCoreThirdParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7C18C73D3A005BB2A9 /* GSCoreThirdParty.framework */; };
 		72A39C8018C73DA3005BB2A9 /* MTDDownloadTesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72A39C7F18C73DA3005BB2A9 /* MTDDownloadTesterViewController.m */; };
+		72AEBEF618DD26A400ECFD23 /* GSUtilitiesSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7259EB1A18C85F0000C802A3 /* GSUtilitiesSDK.framework */; };
+		72AEBEF718DD26A800ECFD23 /* GSCoreThirdParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7C18C73D3A005BB2A9 /* GSCoreThirdParty.framework */; };
+		BFC8BBE618D96F12001DB363 /* GSDownloaderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A39C7A18C73D2E005BB2A9 /* GSDownloaderSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,13 +60,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7259EB1B18C85F0000C802A3 /* GSUtilitiesSDK.framework in Frameworks */,
-				72A39C7B18C73D2E005BB2A9 /* GSDownloaderSDK.framework in Frameworks */,
+				72AEBEF618DD26A400ECFD23 /* GSUtilitiesSDK.framework in Frameworks */,
 				72A39C4618C73CD2005BB2A9 /* CoreGraphics.framework in Frameworks */,
+				72AEBEF718DD26A800ECFD23 /* GSCoreThirdParty.framework in Frameworks */,
 				72A39C7918C73D13005BB2A9 /* CoreLocation.framework in Frameworks */,
 				72A39C7718C73D0B005BB2A9 /* SystemConfiguration.framework in Frameworks */,
 				72A39C7518C73D02005BB2A9 /* MobileCoreServices.framework in Frameworks */,
-				72A39C7D18C73D3A005BB2A9 /* GSCoreThirdParty.framework in Frameworks */,
+				BFC8BBE618D96F12001DB363 /* GSDownloaderSDK.framework in Frameworks */,
 				72A39C7318C73CFB005BB2A9 /* Security.framework in Frameworks */,
 				72A39C4818C73CD2005BB2A9 /* UIKit.framework in Frameworks */,
 				72A39C4418C73CD2005BB2A9 /* Foundation.framework in Frameworks */,
@@ -306,7 +306,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/asm/Work/4399Game/src/svn.app.4399.com/trunk/GSDownloaderSDK/GSDownloaderSDK/Products,
+					/Users/wuyibon/Documents/SVN/GSDownloaderSDK/GSDownloaderSDK/GSDownloaderSDK/Frameworks,
+					/Users/wuyibon/Documents/SVN/GSDownloaderSDK/GSDownloaderSDK/Products,
 					/Users/asm/Work/4399Game/src/svn.app.4399.com/trunk/GSDownloaderSDK/GSDownloaderSDK/GSDownloaderSDK/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -314,7 +315,7 @@
 				INFOPLIST_FILE = "GSDownloaderSDKDemo/GSDownloaderSDKDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "061DB727-833F-45C3-AB96-AAD6F81F60E0";
+				PROVISIONING_PROFILE = "06438023-2E72-4395-83E2-68220B742706";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -327,7 +328,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/asm/Work/4399Game/src/svn.app.4399.com/trunk/GSDownloaderSDK/GSDownloaderSDK/Products,
+					/Users/wuyibon/Documents/SVN/GSDownloaderSDK/GSDownloaderSDK/GSDownloaderSDK/Frameworks,
+					/Users/wuyibon/Documents/SVN/GSDownloaderSDK/GSDownloaderSDK/Products,
 					/Users/asm/Work/4399Game/src/svn.app.4399.com/trunk/GSDownloaderSDK/GSDownloaderSDK/GSDownloaderSDK/Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -335,7 +337,7 @@
 				INFOPLIST_FILE = "GSDownloaderSDKDemo/GSDownloaderSDKDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "061DB727-833F-45C3-AB96-AAD6F81F60E0";
+				PROVISIONING_PROFILE = "06438023-2E72-4395-83E2-68220B742706";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

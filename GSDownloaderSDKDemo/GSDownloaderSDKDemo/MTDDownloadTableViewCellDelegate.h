@@ -12,6 +12,6 @@
 
 @required
 
-- (void)startDownloadAtIndex:(int)index;
+- (void)downloadActionAtIndex:(int)index;
 
 @end
