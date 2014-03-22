@@ -138,13 +138,13 @@
     NSLog(@"临时文件为:%@",tempFile);
     
     MTDDownloadFileModel* downloadFileModel = [[MTDDownloadFileModel alloc] init];
-    [downloadFileModel setDownloadFileName:@"4399手机游戏"];
+    [downloadFileModel setDownloadFileName:@"全民酷跑"];
     [downloadFileModel setDownloadFileAvatorURL:@"http://f1.img4399.com/mi~136383~124x124?1392195212"];
     [downloadFileModel setDownloadTaskURL:fromUrl];
     [downloadFileModel setDownloadFileSavePath:saveFile];
     [downloadFileModel setDownloadTempSavePath:tempFile];
     [downloadFileModel setDownloadFileVersion:@"2.0"];
-    [downloadFileModel setDownloadFilePlistURL:@"itms-services:///?action=download-manifest&url=http://mobi.4399tech.com:8003/app/GameStoreHD/GameStoreHD.plist"];
+    [downloadFileModel setDownloadFilePlistURL:@""];
     
     GSDownloadTask* downloadTask = [[GSDownloadTask alloc] init];
     [downloadTask setDownloadTaskId:[NSString stringWithFormat:@"%d", _downdloadCount]];
